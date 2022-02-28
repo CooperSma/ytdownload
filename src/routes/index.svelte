@@ -4,24 +4,16 @@
 
 <script lang="ts">
 	// import axios from "axios"
-
+	let dlurl
 	let yturl = 'https://youtube.com';
 	let error = ' '
-
-	function urlSubmitted() {
-		error = "submitted!"
-		fetch("https://ipinfo.io/json")
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (myJson) {
-    console.log(myJson.ip);
-  })
-  .catch(function (error) {
-    console.log("Error: " + error);
-  });
+	async function urlSubmitted(){
+		const responsee =  await fetch("https://endydl.herokuapp.com/api/play?url=" + yturl)
+		const data = await responsee.json;
 
 
+		console.log(responsee["url"]);
+		dlurl = responsee["url"]
 	}
 	$: {
 
@@ -68,6 +60,7 @@
 
 			</div>
 		</form>
+		<a href = "{dlurl}" class = "text-sm">Download</a>
 		<br>
 		<h3 id="error" class="text-red text-sm">{error}</h3>
 
