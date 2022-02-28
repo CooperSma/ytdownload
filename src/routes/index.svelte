@@ -5,7 +5,7 @@
 <script lang="ts">
 	// import axios from "axios"
 	let dlurl
-	let yturl = 'https://youtube.com';
+	let yturl = '';
 	let error = ' '
 	async function urlSubmitted(){
 		const responsee =  await fetch("https://endydl.herokuapp.com/api/play?url=" + yturl)
