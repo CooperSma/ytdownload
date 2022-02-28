@@ -6,14 +6,31 @@
 	// import axios from "axios"
 	let dlurl
 	let yturl = '';
+	let stage = '';
 	let error = ' '
 	async function urlSubmitted(){
+		try {
 		const responsee =  await fetch("https://endydl.herokuapp.com/api/play?url=" + yturl)
 		const data = await responsee.json;
-
-
 		console.log(responsee["url"]);
-		dlurl = responsee["url"]
+		if(responsee["url"].includes("endydl")){
+			error = "Invalid URL"
+			stage = "hide"
+		}
+		else{
+			error = ""
+			stage = "download"
+			dlurl = responsee["url"]
+		}
+			
+		} catch (erroroutput) {
+			error = erroroutput
+			
+		}
+		
+
+
+		
 	}
 	$: {
 
@@ -60,8 +77,11 @@
 
 			</div>
 		</form>
+		{#if stage == "download"}
+		<br>
 		<a href = "{dlurl}" class = "text-sm">Download</a>
 		<br>
+		{/if}
 		<h3 id="error" class="text-red text-sm">{error}</h3>
 
 	</div>
