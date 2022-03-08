@@ -70,7 +70,7 @@
 		</form>
 		{#if stage == "download"}
 		<br>
-		<a class = "text-sm" href = "{yturl}" download>Download</a>
+		<a class = "text-sm" href = "{dlurl}" download>Download</a>
 		<br>
 		{/if}
 		<h3 id="error" class="text-red text-sm">{error}</h3>
