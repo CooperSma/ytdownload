@@ -8,29 +8,20 @@
 	let yturl = '';
 	let stage = '';
 	let error = ' '
-	async function urlSubmitted(){
-		try {
-		const responsee =  await fetch("https://endydl.herokuapp.com/api/play?url=" + yturl)
-		const data = await responsee.json;
-		console.log(responsee["url"]);
-		if(responsee["url"].includes("endydl")){
-			error = "Invalid URL"
-			stage = "hide"
-		}
-		else{
-			error = ""
-			stage = "download"
-			dlurl = responsee["url"]
-		}
-			
-		} catch (erroroutput) {
-			error = erroroutput
-			
-		}
+	async function urlSubmitted() {
+		const parsed = (new URL(yturl)).searchParams
+		// console.log(parsed.get('v'))
+		
+		const req = await fetch("/.netlify/functions/api?id=" + parsed.get('v'))
+		const res = await req.text()
+		dlurl = res
+		console.log(res)
+		stage = "download"
 		
 
 
-		
+
+
 	}
 	$: {
 
@@ -79,7 +70,7 @@
 		</form>
 		{#if stage == "download"}
 		<br>
-		<a href = "{dlurl}" class = "text-sm">Download</a>
+		<a class = "text-sm" href = "/videoplayback.mp4" download>Download</a>
 		<br>
 		{/if}
 		<h3 id="error" class="text-red text-sm">{error}</h3>
